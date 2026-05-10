@@ -8,7 +8,8 @@ export default function CreateEventPage() {
   const [form, setForm] = useState({
     title: '',
     location: '',
-    starts_at: '',
+    date: '',
+    time: '',
     capacity: '',
     description: '',
   });
@@ -25,6 +26,7 @@ export default function CreateEventPage() {
     try {
       const eventData = await createEvent({
         ...form,
+        starts_at: form.date && form.time ? `${form.date}T${form.time}` : '',
         capacity: Number(form.capacity),
       });
       navigate(`/events/${eventData.id}`);
@@ -75,15 +77,25 @@ export default function CreateEventPage() {
             {validationErrors.location && <p className="text-sm text-rose-600">{validationErrors.location[0]}</p>}
 
             <label className="block text-sm font-medium text-slate-700">
-              Date et heure
+              Date
               <input
-                type="datetime-local"
-                value={form.starts_at}
-                onChange={(event) => setForm((prev) => ({ ...prev, starts_at: event.target.value }))}
+                type="date"
+                value={form.date}
+                onChange={(event) => setForm((prev) => ({ ...prev, date: event.target.value }))}
                 className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
               />
             </label>
             {validationErrors.starts_at && <p className="text-sm text-rose-600">{validationErrors.starts_at[0]}</p>}
+
+            <label className="block text-sm font-medium text-slate-700">
+              Heure
+              <input
+                type="time"
+                value={form.time}
+                onChange={(event) => setForm((prev) => ({ ...prev, time: event.target.value }))}
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
+              />
+            </label>
 
             <label className="block text-sm font-medium text-slate-700">
               Places
