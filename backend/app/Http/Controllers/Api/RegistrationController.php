@@ -17,7 +17,10 @@ class RegistrationController extends Controller
             ->orderBy('created_at')
             ->get(['id', 'name', 'email', 'created_at']);
 
-        return response()->json($registrations);
+        return response()->json([
+            'message' => 'Registrations retrieved successfully.',
+            'data' => $registrations
+        ]);
     }
 
     public function store(RegisterParticipantRequest $request, Event $event): JsonResponse
@@ -40,7 +43,10 @@ class RegistrationController extends Controller
 
         $registration = $event->registrations()->create($request->validated());
 
-        return response()->json($registration, 201);
+        return response()->json([
+            'message' => 'Registration created successfully.',
+            'data' => $registration
+        ], 201);
     }
 
     public function destroy(Registration $registration): Response

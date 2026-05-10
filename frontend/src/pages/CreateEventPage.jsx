@@ -26,7 +26,7 @@ export default function CreateEventPage() {
     try {
       const eventData = await createEvent({
         ...form,
-        starts_at: form.date && form.time ? `${form.date}T${form.time}` : '',
+        starts_at: form.date && form.time ? new Date(`${form.date}T${form.time}`).toISOString() : '',
         capacity: Number(form.capacity),
       });
       navigate(`/events/${eventData.id}`);
@@ -34,7 +34,7 @@ export default function CreateEventPage() {
       const response = error?.response;
 
       if (response?.status === 400) {
-        setValidationErrors(response.data.errors || {});
+        setValidationErrors(response.data.details || {});
       } else {
         setServerError('Impossible de créer l’événement.');
       }
@@ -82,6 +82,11 @@ export default function CreateEventPage() {
                 type="date"
                 value={form.date}
                 onChange={(event) => setForm((prev) => ({ ...prev, date: event.target.value }))}
+                onClick={(event) => {
+                  if (event.target.showPicker) {
+                    event.target.showPicker();
+                  }
+                }}
                 className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
               />
             </label>
@@ -93,6 +98,11 @@ export default function CreateEventPage() {
                 type="time"
                 value={form.time}
                 onChange={(event) => setForm((prev) => ({ ...prev, time: event.target.value }))}
+                onClick={(event) => {
+                  if (event.target.showPicker) {
+                    event.target.showPicker();
+                  }
+                }}
                 className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
               />
             </label>

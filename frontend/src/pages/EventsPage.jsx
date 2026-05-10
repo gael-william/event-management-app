@@ -3,6 +3,7 @@ import { fetchEvents } from '../api/events';
 import EventCard from '../components/EventCard';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingSpinner from '../components/LoadingSpinner';
+import SearchBar from '../components/SearchBar';
 
 export default function EventsPage() {
   const [events, setEvents] = useState([]);
@@ -42,16 +43,10 @@ export default function EventsPage() {
           </div>
 
           <div className="w-full max-w-md">
-            <label htmlFor="search" className="mb-2 block text-sm font-medium text-slate-700">
-              Recherche
-            </label>
-            <input
-              id="search"
-              type="search"
+            <SearchBar
               value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              onChange={setSearch}
               placeholder="Titre, lieu ou description"
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
             />
           </div>
         </div>

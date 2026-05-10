@@ -59,7 +59,7 @@ export default function EventDetailPage() {
       if (response?.status === 409 || response?.status === 422) {
         setServerError(response.data.message ?? 'Impossible de valider la demande.');
       } else if (response?.status === 400) {
-        setValidationErrors(response.data.errors || {});
+        setValidationErrors(response.data.details || {});
       } else {
         setServerError('Erreur réseau. Veuillez réessayer.');
       }

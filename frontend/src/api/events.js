@@ -22,7 +22,7 @@ export const registerParticipant = async (eventId, participant) => {
 
 export const fetchRegistrations = async (eventId) => {
   const response = await apiClient.get(`/api/events/${eventId}/registrations`);
-  return response.data;
+  return response.data.data;
 };
 
 export const deleteRegistration = async (registrationId) => {

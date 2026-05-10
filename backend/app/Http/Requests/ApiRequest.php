@@ -12,7 +12,9 @@ abstract class ApiRequest extends FormRequest
     {
         throw new HttpResponseException(
             response()->json([
-                'errors' => $validator->errors(),
+                'error' => 'VALIDATION_ERROR',
+                'message' => 'Validation failed.',
+                'details' => $validator->errors(),
             ], 400)
         );
     }

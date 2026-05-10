@@ -28,6 +28,7 @@ class EventController extends Controller
             ->map(fn (Event $event) => $this->transform($event));
 
         return response()->json([
+            'message' => 'Events retrieved successfully.',
             'data' => $events,
             'meta' => [
                 'count' => $events->count(),
@@ -40,14 +41,20 @@ class EventController extends Controller
         $event = Event::create($request->validated());
         $event->loadCount('registrations');
 
-        return response()->json(['data' => $this->transform($event)], 201);
+        return response()->json([
+            'message' => 'Event created successfully.',
+            'data' => $this->transform($event)
+        ], 201);
     }
 
     public function show(Event $event): JsonResponse
     {
         $event->loadCount('registrations');
 
-        return response()->json(['data' => $this->transform($event)]);
+        return response()->json([
+            'message' => 'Event retrieved successfully.',
+            'data' => $this->transform($event)
+        ]);
     }
 
     public function update(UpdateEventRequest $request, Event $event): JsonResponse
@@ -55,7 +62,10 @@ class EventController extends Controller
         $event->update($request->validated());
         $event->loadCount('registrations');
 
-        return response()->json(['data' => $this->transform($event)]);
+        return response()->json([
+            'message' => 'Event updated successfully.',
+            'data' => $this->transform($event)
+        ]);
     }
 
     public function destroy(Event $event): Response
